@@ -6,9 +6,12 @@ server.on('message', (msg, info) => {
   console.log(`Received message: ${msg} from ${info.address}:${info.port}`);
 });
 
+
 server.on('listening', () => {
   const addr = server.address();
   console.log(`Server listening on ${addr.address}:${addr.port}`);
+
+  server.setBroadcast(true);
 });
 
 server.bind(8081);
