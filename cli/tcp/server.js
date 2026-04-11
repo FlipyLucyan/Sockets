@@ -1,11 +1,18 @@
 import net from "net";
 
+const clients = new Set();
+
 const server = net.createServer((socket) => {
+  clients.add(socket);
   console.log("Client connected");
 
   socket.on("data", (data) => {
     console.log("Data received via TCP client:", data.toString());
-    socket.write(data.toString())
+
+    // Broadcast para todos os clientes 
+    for (var client of clients) {
+      client.write(data.toString());
+    }
   });
 
   socket.on("end", () => {

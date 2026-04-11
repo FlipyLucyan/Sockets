@@ -13,26 +13,29 @@ app.whenReady().then(() => {
     },
   })
 
+  win.webContents.openDevTools();
+
   win.loadFile('src/app/index.html')
 
-  const net = require('net');
+  win.webContents.on('did-finish-load', () => {
+    const net = require('net');
 
-  const client = net.createConnection({ port: 8080 }, () => console.log('Connectado a porta 8080'));
+    const client = net.createConnection({ port: 8080 }, () => console.log('Connectado a porta 8080'));
 
-  client.on("data", (data) => {
-    const message = data.toString();
-    console.log(message)
-    win.webContents.send("new-message", message);
-  });
+    client.on("data", (data) => {
+      const message = data.toString();
+      console.log('Message:', message)
+      win.webContents.send("new-message", message);
+    });
 
-  client.on("end", () => {
-    console.log("Disconnectado.");
-  });
+    client.on("end", () => {
+      console.log("Disconnectado.");
+    });
 
-  client.on("error", (err) => {
-    console.error("Client error:", err.message);
-  });
-
+    client.on("error", (err) => {
+      console.error("Client error:", err.message);
+    });
+  })
 
 })
 
