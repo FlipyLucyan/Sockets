@@ -15,6 +15,7 @@
 
 <body>
   <section id="contacts">
+    <button id="connect">Connectar como cliente</button>
     <div></div>
     <div></div>
     <div></div>
@@ -34,19 +35,11 @@
 
     <section id="mensagem">
       <div id="messages" class="tu">
-        <p id="message"></p>
       </div>
 
-      <script>
-
-        window.api.onMessage((msg) => {
-          const container = document.getElementById("message");
-
-          const div = document.createElement("div");
-          div.textContent = msg
-          container.appendChild(div);
-        });
+      <script src="./script.js">
       </script>
+
     </section>
 
     <section id="EnviarMensagem">
@@ -58,5 +51,6 @@
 
 
 </body>
+
 
 </html>

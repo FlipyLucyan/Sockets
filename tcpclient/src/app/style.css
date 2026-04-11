@@ -23,7 +23,7 @@ body {
 }
 
 #mensagem p {
-  margin-top: 23vh;
+  /* margin-top: 23vh; */
   padding: 1%;
   color: white;
   width: 20%;
@@ -115,8 +115,4 @@ img {
   color: rgb(132, 124, 108);
   background-color: rgb(53, 52, 52);
 
-}
-
-div {
-  gap: 20px;
 }

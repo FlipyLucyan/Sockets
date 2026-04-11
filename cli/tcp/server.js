@@ -5,6 +5,7 @@ const server = net.createServer((socket) => {
 
   socket.on("data", (data) => {
     console.log("Data received via TCP client:", data.toString());
+    socket.write(data.toString())
   });
 
   socket.on("end", () => {

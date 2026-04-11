@@ -17,3 +17,12 @@ const client = createConnection({ port: 8080 }, () => {
 client.on("error", (err) => {
   console.error("Client error:", err.message);
 });
+
+client.write('ehy')
+
+client.on('data', (data) => {
+  const message = data.toString();
+
+
+  console.log(message)
+})
