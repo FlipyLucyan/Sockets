@@ -1,4 +1,4 @@
-const { app, BrowserWindow } = require('electron')
+const { app, BrowserWindow, ipcMain } = require('electron')
 const path = require('path')
 
 let win;
@@ -28,6 +28,7 @@ app.whenReady().then(() => {
       win.webContents.send("new-message", message);
     });
 
+
     client.on("end", () => {
       console.log("Disconnectado.");
     });
@@ -35,6 +36,14 @@ app.whenReady().then(() => {
     client.on("error", (err) => {
       console.error("Client error:", err.message);
     });
+
+    ipcMain.handle('tcp-send', (_, msg) => {
+      if (!client) {
+        throw new Error("Client not connected yet");
+      }
+      client.write(msg)
+      return true;
+    })
   })
 
 })
