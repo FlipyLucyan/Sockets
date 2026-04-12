@@ -4,6 +4,8 @@ const server = dgram.createSocket('udp4');
 
 server.on('message', (msg, info) => {
   console.log(`Received message: ${msg} from ${info.address}:${info.port}`);
+
+  server.send(msg.toString(), 8081, '255.255.255.255');
 });
 
 

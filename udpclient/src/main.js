@@ -17,31 +17,34 @@ app.whenReady().then(() => {
 
   win.loadFile('src/app/index.html')
 
-  win.webContents.on('did-finish-load', () => {
-    const dgram = require('dgram')
+  const dgram = require('dgram')
 
-    const client = dgram.createSocket('udp4');
+  const client = dgram.createSocket('udp4');
 
-    client.on('message', (msg) => {
-      win.webContents.send("new-message", msg.toString());
-    })
-
-    ipcMain.handle('udp-send', (_, msg) => {
-      if (!client) {
-        throw new Error("Client not connected yet");
-      }
-
-      const message = Buffer.from(msg);
-      client.send(message, 8081, 'localhost', (err) => {
-        if (err) {
-          console.log('Error:', err);
-        } else {
-          console.log('Message sent to server');
-        }
-        client.close();
-      });
-      return true;
-    })
+  client.on('message', (msg) => {
+    const message = msg.toString();
+    console.log(message)
+    win.webContents.send("new-message", message);
   })
+
+  client.bind(8082);
+
+  ipcMain.handle('udp-send', (_, msg) => {
+    if (!client) {
+      throw new Error("Client not connected yet");
+    }
+
+    const message = Buffer.from(msg);
+    client.send(message, 8081, 'localhost', (err) => {
+      if (err) {
+        console.log('Error:', err);
+      } else {
+        console.log('Message sent to server');
+      }
+      client.close();
+    });
+    return true;
+  })
+
 })
 

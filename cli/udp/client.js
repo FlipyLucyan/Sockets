@@ -10,5 +10,5 @@ client.send(message, 8081, 'localhost', (err) => {
   } else {
     console.log('Message sent to server');
   }
-  client.close();
+  // client.close();
 });
