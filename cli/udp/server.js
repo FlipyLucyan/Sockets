@@ -5,7 +5,7 @@ const server = dgram.createSocket('udp4');
 server.on('message', (msg, info) => {
   console.log(`Received message: ${msg} from ${info.address}:${info.port}`);
 
-  server.send(msg.toString(), 8081, '255.255.255.255');
+  server.send(msg.toString(), info.port, info.address);
 });
 
 
@@ -15,6 +15,10 @@ server.on('listening', () => {
 
   server.setBroadcast(true);
 });
+
+server.on('connect', (socket) => {
+  console.log('Client connected ', socket)
+})
 
 server.bind(8081);
 
