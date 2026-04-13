@@ -12,5 +12,8 @@
   },
   "devDependencies": {
     "electron": "^41.2.0"
+  },
+  "dependencies": {
+    "run-electron": "^2.0.0"
   }
 }
